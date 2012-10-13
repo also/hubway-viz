@@ -1,0 +1,22 @@
+lets only consider trips under 3 days. that lets us 
+
+date range:
+
+2011-07-28 07:12:00-07
+2012-10-01 17:32:00-07
+
+
+552074 total trips
+
+97 stations
+885 bikes
+
+
+1280 gender/zip/age pairs
+
+date 16
+duration 13
+start 7
+end 7
+bike 10
+user 11
