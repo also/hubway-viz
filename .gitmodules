@@ -1,0 +1,6 @@
+[submodule "vagrant/cookbooks/postgresql"]
+	path = vagrant/cookbooks/postgresql
+	url = https://github.com/opscode-cookbooks/postgresql.git
+[submodule "vagrant/cookbooks/openssl"]
+	path = vagrant/cookbooks/openssl
+	url = https://github.com/opscode-cookbooks/openssl.git
