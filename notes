@@ -8,11 +8,11 @@ date range:
 
 552074 total trips
 
-97 stations
+97 stations (9409 possible combinations, 7389 actual combinations)
 885 bikes
 
 
-1280 gender/zip/age pairs
+1279 gender/zip/age pairs
 
 date 16
 duration 13
@@ -20,3 +20,31 @@ start 7
 end 7
 bike 10
 user 11
+
+found coastline: http://support.mapbox.com/discussions/tilemill/293-rendering-osm-processed-coastlines
+unfortunately, not enough detail. close...
+OSM data: http://download.bbbike.org/osm/bbbike/CambridgeMa/
+http://metro.teczno.com/#boston also looks helpful... links to a bunch of empty coastline files though...
+
+elevation from here: http://viewer.nationalmap.gov/viewer/
+so... the 1/9 resoltion didn't work... it gave me two files, which didn't seem to cover the metro area.
+terrain tutorial: http://mapbox.com/tilemill/docs/guides/terrain-data/
+
+
+need gdal
+
+brew install gdal
+gdalwarp -s_srs EPSG:4269 -t_srs EPSG:3785 -r bilinear 88128884\\88128884.tif ~/work/hubway-viz/data/elevation/elevation-3785.tif
+gdaldem hillshade -co compress=lzw ~/work/hubway-viz/data/elevation/elevation-3785.tif ~/work/hubway-viz/data/elevation/elevation-hillshade-3785.tif
+gdaldem slope ~/work/hubway-viz/data/elevation/elevation-3785.tif ~/work/hubway-viz/data/elevation/elevation-slope-3785.tif
+gdaldem color-relief -co compress=lzw ~/work/hubway-viz/data/elevation/elevation-slope-3785.tif slope-ramp.txt ~/work/hubway-viz/data/elevation/elevation-slopeshade-3785.tif
+
+to make the elevation data queryable, I've downloaded it in BIL_16INT format. I'll want to reproject it to plate carrée so it can be easiily queried in javascript.
+
+Routing:
+My idea is to generate a node/edge db from the data, run djikstra's algorithm, and store the routes for all stations. At the very least, storing the distance between each pair of stations.
+
+It would be interesting to factor elevation data into the edges.
+
+After calculating the routes, calculate elevation profiles for them. Using JTS or soemthing, sample the paths to get a set of points, and get the elevations for those points.
+https://github.com/Tristramg/osm4routing
