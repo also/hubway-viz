@@ -1,0 +1,37 @@
+What stations have the longest trips? Are they further from other stations?
+Station density (for each spot on the map, compute how many stations within some distance.
+What bikes have the most milage? What bikes sit around, especially at busy stations?
+What data problems are there? Impossible trip speeds, double-used bikes, etc.
+One way vs two way (trips where the reverse is less common)
+Overall directional trends (vector field?)
+Clustering (morning, evening, direction, duration)
+
+bike movement not in trips
+
+Bike data (and for stations where applicable):
+distance traveled
+first use
+last use
+used days (number of days it was actually in use)
+
+Station data:
+distance matrix
+closest station
+elevation
+other station distance distribution (4 within .5 miles, 9 within 1 mile)
+proximity to mass transit
+
+Trip data:
+next bike trip
+all station pair data
+
+Station pair data:
+compass direction
+elevation change
+rise
+fall
+average incline
+crow flies distance
+probable on the ground distance
+equivalent mass transit trip
+equivalent driving trip
