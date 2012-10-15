@@ -20,6 +20,9 @@ cut -d , -f 5,7 ${TRIPS} | sort | uniq > output/station_pairs.csv
 echo extracting bikes
 cut -d , -f 8 ${TRIPS} | sort | uniq > output/bikes
 
+echo extracting bike moves
+ruby extract_moves.rb output/trips_sorted.csv > output/moves.csv
+
 echo generating routing data
 mkdir output/routing
 ./lib/python-env/bin/osm4routing -n output/routing/nodes.csv -e output/routing/edges.csv data/CambridgeMa.osm
