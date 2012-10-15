@@ -1,0 +1,181 @@
+{
+  "bounds": [
+    -71.1945,
+    42.2887,
+    -70.9748,
+    42.4065
+  ],
+  "center": [
+    -71.0654,
+    42.3575,
+    11
+  ],
+  "format": "png",
+  "interactivity": {
+    "layer": "stations",
+    "template_teaser": "{{{NAME}}}",
+    "fields": [
+      "NAME"
+    ]
+  },
+  "minzoom": 11,
+  "maxzoom": 18,
+  "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+  "Stylesheet": [
+    "style.mss"
+  ],
+  "Layer": [
+    {
+      "geometry": "raster",
+      "extent": [
+        -71.23305555531496,
+        42.27797350347528,
+        -70.9059332449187,
+        42.439074073096855
+      ],
+      "id": "elevation-hillshade",
+      "class": "",
+      "Datasource": {
+        "file": "/Users/ryan/work/hubway-viz/data/elevation/elevation-hillshade-3785.tif",
+        "id": "metadata",
+        "project": "Hubway-Test",
+        "srs": ""
+      },
+      "srs-name": "900913",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "advanced": {},
+      "name": "elevation-hillshade",
+      "status": "off"
+    },
+    {
+      "geometry": "polygon",
+      "extent": [
+        -179.99999692067183,
+        -85.051,
+        179.99999692067183,
+        83.66933299999998
+      ],
+      "id": "land",
+      "class": "",
+      "Datasource": {
+        "file": "/Users/ryan/Downloads/processed_p/processed_p.shp"
+      },
+      "srs-name": "autodetect",
+      "srs": "",
+      "advanced": {},
+      "name": "land"
+    },
+    {
+      "geometry": "polygon",
+      "extent": [
+        -71.28993,
+        42.18001,
+        -70.81105,
+        42.58999
+      ],
+      "id": "buildings",
+      "class": "",
+      "Datasource": {
+        "file": "/Users/ryan/work/hubway-viz/data/CambridgeMa-shp/buildings.shp",
+        "id": "cambridgema",
+        "project": "Hubway-Test",
+        "srs": ""
+      },
+      "srs-name": "autodetect",
+      "srs": "",
+      "advanced": {},
+      "name": "buildings",
+      "status": "off"
+    },
+    {
+      "geometry": "linestring",
+      "extent": [
+        -71.28999,
+        42.18001,
+        -70.81001,
+        42.58997
+      ],
+      "id": "waterways",
+      "class": "",
+      "Datasource": {
+        "file": "/Users/ryan/work/hubway-viz/data/CambridgeMa-shp/waterways.shp",
+        "id": "waterways",
+        "project": "Hubway-Test",
+        "srs": ""
+      },
+      "srs-name": "autodetect",
+      "srs": "",
+      "advanced": {},
+      "name": "waterways"
+    },
+    {
+      "geometry": "polygon",
+      "extent": [
+        -71.29,
+        42.18003,
+        -70.81003,
+        42.58982
+      ],
+      "id": "natural",
+      "class": "",
+      "Datasource": {
+        "file": "/Users/ryan/work/hubway-viz/data/CambridgeMa-shp/natural.shp",
+        "id": "natural",
+        "project": "Hubway-Test",
+        "srs": ""
+      },
+      "srs-name": "autodetect",
+      "srs": "",
+      "advanced": {},
+      "name": "natural"
+    },
+    {
+      "geometry": "linestring",
+      "extent": [
+        -71.29,
+        42.18,
+        -70.81001,
+        42.58999
+      ],
+      "id": "roads",
+      "class": "",
+      "Datasource": {
+        "file": "/Users/ryan/work/hubway-viz/data/CambridgeMa-shp/roads.shp",
+        "id": "roads",
+        "project": "Hubway-Test",
+        "srs": ""
+      },
+      "srs-name": "autodetect",
+      "srs": "",
+      "advanced": {},
+      "name": "roads"
+    },
+    {
+      "geometry": "point",
+      "extent": [
+        -71.146452,
+        42.311819,
+        -71.035705,
+        42.386428
+      ],
+      "id": "stations",
+      "class": "",
+      "Datasource": {
+        "file": "/Users/ryan/work/hubway-viz/data/stations_trips/stations.shp.zip",
+        "id": "stations",
+        "project": "Hubway-Test",
+        "srs": ""
+      },
+      "srs-name": "autodetect",
+      "srs": "",
+      "advanced": {},
+      "name": "stations"
+    }
+  ],
+  "scale": 1,
+  "metatile": 2,
+  "name": "Hubway Visualization",
+  "description": "",
+  "attribution": "Ryan Berdeen",
+  "legend": ""
+}
