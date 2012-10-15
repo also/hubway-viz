@@ -4,3 +4,6 @@
 [submodule "vagrant/cookbooks/openssl"]
 	path = vagrant/cookbooks/openssl
 	url = https://github.com/opscode-cookbooks/openssl.git
+[submodule "mapc-basemap"]
+	path = mapc-basemap
+	url = https://github.com/MAPC/basemap
