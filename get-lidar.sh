@@ -2,7 +2,7 @@ mkdir -p data/lidar
 cd data/lidar
 
 237894
-lidar_files="233898 233902 237898 237902 241898 241902 241894 237894 233894"
+lidar_files="233898 233902 237898 237902 241898 241902 241894 237894 233894 229902"
 for file in $lidar_files
 do
   echo getting $file
