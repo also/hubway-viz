@@ -48,3 +48,30 @@ It would be interesting to factor elevation data into the edges.
 
 After calculating the routes, calculate elevation profiles for them. Using JTS or soemthing, sample the paths to get a set of points, and get the elevations for those points.
 https://github.com/Tristramg/osm4routing
+
+MAPC postgres:
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO mapc;
+
+LIDAR
+I'm assuming the data in in meters. its NAVD88
+
+merging tiffs
+PYTHONPATH=/usr/local/Cellar//gdal/1.9.2/lib/python2.7/site-packages /usr/local/bin/gdal_merge.py
+
+Where the fuck is the mystic river polygon in the BBBike shp dataset?
+i see in CambridgeMa.shp
+
+  <node id="358273046" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="42.40863" lon="-71.12178">
+    <tag k="ele" v="42"/>
+    <tag k="gnis:county_id" v="017"/>
+    <tag k="gnis:created" v="02/24/1974"/>
+    <tag k="gnis:feature_id" v="612789"/>
+    <tag k="gnis:state_id" v="25"/>
+    <tag k="landuse" v="reservoir"/>
+    <tag k="name" v="Mystic Reservoir"/>
+  </node>
+
+
+
+
+ogrinfo data/CambridgeMa-shp/roads.shp roads  | grep type | cut -d = -f 2  |sort | uniq
