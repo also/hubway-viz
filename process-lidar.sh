@@ -4,6 +4,9 @@ PYTHONPATH=/usr/local/Cellar/gdal/1.9.2/lib/python2.7/site-packages /usr/local/b
 echo reprojecting
 gdalwarp -s_srs EPSG:26986 -t_srs EPSG:3785 -r bilinear data/lidar.tif data/lidar-3785.tif
 
+echo coloring
+gdaldem color-relief data/lidar-3785.tif ramp.txt data/lidar-colored-3785.tif
+
 echo generating hillshade
 gdaldem hillshade -co compress=lzw data/lidar-3785.tif data/lidar-hillshade-3785.tif
 
