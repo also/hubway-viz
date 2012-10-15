@@ -50,24 +50,6 @@
     {
       "geometry": "polygon",
       "extent": [
-        -179.99999692067183,
-        -85.051,
-        179.99999692067183,
-        83.66933299999998
-      ],
-      "id": "land",
-      "class": "",
-      "Datasource": {
-        "file": "/Users/ryan/Downloads/processed_p/processed_p.shp"
-      },
-      "srs-name": "autodetect",
-      "srs": "",
-      "advanced": {},
-      "name": "land"
-    },
-    {
-      "geometry": "polygon",
-      "extent": [
         -71.28993,
         42.18001,
         -70.81105,
@@ -88,25 +70,40 @@
       "status": "off"
     },
     {
-      "geometry": "linestring",
+      "geometry": "raster",
       "extent": [
-        -71.28999,
-        42.18001,
-        -70.81001,
-        42.58997
+        -71.14832594126851,
+        42.295399658005685,
+        -71.0019615017475,
+        42.40397423251339
       ],
-      "id": "waterways",
+      "id": "lidar",
       "class": "",
       "Datasource": {
-        "file": "/Users/ryan/work/hubway-viz/data/CambridgeMa-shp/waterways.shp",
-        "id": "waterways",
-        "project": "Hubway-Test",
-        "srs": ""
+        "file": "/Users/ryan/work/hubway-viz/data/lidar-colored-3785.tif"
+      },
+      "srs-name": "900913",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "advanced": {},
+      "name": "lidar"
+    },
+    {
+      "geometry": "polygon",
+      "extent": [
+        -179.99999692067183,
+        -85.051,
+        179.99999692067183,
+        83.66933299999998
+      ],
+      "id": "land",
+      "class": "",
+      "Datasource": {
+        "file": "/Users/ryan/Downloads/processed_p/processed_p.shp"
       },
       "srs-name": "autodetect",
       "srs": "",
       "advanced": {},
-      "name": "waterways"
+      "name": "land"
     },
     {
       "geometry": "polygon",
@@ -121,13 +118,34 @@
       "Datasource": {
         "file": "/Users/ryan/work/hubway-viz/data/CambridgeMa-shp/natural.shp",
         "id": "natural",
-        "project": "Hubway-Test",
+        "project": "hubway-viz",
         "srs": ""
       },
       "srs-name": "autodetect",
       "srs": "",
       "advanced": {},
       "name": "natural"
+    },
+    {
+      "geometry": "linestring",
+      "extent": [
+        -71.28999,
+        42.18001,
+        -70.81001,
+        42.58997
+      ],
+      "id": "waterways",
+      "class": "",
+      "Datasource": {
+        "file": "/Users/ryan/work/hubway-viz/data/CambridgeMa-shp/waterways.shp",
+        "id": "waterways",
+        "project": "hubway-viz",
+        "srs": ""
+      },
+      "srs-name": "autodetect",
+      "srs": "",
+      "advanced": {},
+      "name": "waterways"
     },
     {
       "geometry": "linestring",
