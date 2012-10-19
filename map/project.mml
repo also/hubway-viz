@@ -181,7 +181,7 @@
       "Datasource": {
         "file": "/Users/ryan/work/hubway-viz/data/stations_trips/stations.shp.zip",
         "id": "stations",
-        "project": "Hubway-Test",
+        "project": "hubway-viz",
         "srs": ""
       },
       "srs-name": "autodetect",

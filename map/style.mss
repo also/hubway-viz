@@ -27,10 +27,10 @@ Map {
   line-color: @water;
 }
 
-#natural[type='park'],
+/*#natural[type='park'],
 #natural[type='forest']{
   polygon-fill: @park;
-}
+}*/
 
 #natural[type='shoreline'] {
   line-color: red;
