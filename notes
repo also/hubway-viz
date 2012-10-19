@@ -75,3 +75,7 @@ i see in CambridgeMa.shp
 
 
 ogrinfo data/CambridgeMa-shp/roads.shp roads  | grep type | cut -d = -f 2  |sort | uniq
+
+need to get rid of parking lots as roads, also maybe some paths, like mt auburn cemetary which are closed to bikes
+
+hourly climate data: http://lwf.ncdc.noaa.gov/oa/climate/climatedata.html#hourly -> http://cdo.ncdc.noaa.gov/pls/plclimprod/poemain.accessrouter?datasetabbv=DS3505
