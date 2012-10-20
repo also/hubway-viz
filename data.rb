@@ -46,8 +46,8 @@ def unpack(d)
   [date, duration, start_station, end_station, bike_index, user_index]
 end
 
-BIKE_INDEX = build_index 'bikes.txt'
-USER_INDEX = build_index 'users.txt'
+BIKE_INDEX = build_index 'output/bikes.txt'
+USER_INDEX = build_index 'output/users.txt'
 
 RANGE_1 = parse_ts('2011-07-28 07:12:00-07') .. parse_ts('2011-11-30 20:58:00-08')
 RANGE_2 = parse_ts('2012-03-13 15:31:00-07') .. parse_ts('2012-10-01 17:32:00-07')

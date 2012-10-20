@@ -18,7 +18,7 @@ echo extracting station pairs
 cut -d , -f 5,7 ${TRIPS} | sort | uniq > output/station_pairs.csv
 
 echo extracting bikes
-cut -d , -f 8 ${TRIPS} | sort | uniq > output/bikes
+cut -d , -f 8 ${TRIPS} | sort | uniq > output/bikes.txt
 
 echo extracting bike moves
 ruby extract_moves.rb output/trips_sorted.csv > output/moves.csv
