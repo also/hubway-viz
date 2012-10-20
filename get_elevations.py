@@ -33,14 +33,12 @@ class GeoTiff(object):
         datatype = band.DataType
         values = band.ReadRaster(int(x), int(y), 1, 1, 1, 1, datatype)
         return struct.unpack('f' * 1, values)[0]
-
 t = GeoTiff(sys.argv[1])
-station = [42.344763,-71.09788]
-#station = [42.386428,-71.096413] # somerville city hall
-#station = [42.330825,-71.057007] # andrew station
-#station = [42.350851,-71.089886] # beacon st mass ave
-#station = [42.341598,-71.123338] # coolidge corner
-#x, y, z = transform_to_ds.TransformPoint(latlong[0], latlong[1])
 
-elevation = t.get(station[1], station[0])
-print elevation
+with open(sys.argv[2]) as f:
+    f.next()
+    print 'id,terminalName,name,installed,locked,temporary,lat,lng,elevation'
+    for line in f:
+        id,terminalName,name,installed,locked,temporary,lat,lng = line.strip().split(',')
+        elevation = t.get(float(lng), float(lat))
+        print ','.join([id,terminalName,name,installed,locked,temporary,lat,lng,str(elevation)])
