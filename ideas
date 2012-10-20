@@ -5,7 +5,7 @@ What data problems are there? Impossible trip speeds, double-used bikes, etc.
 One way vs two way (trips where the reverse is less common)
 Overall directional trends (vector field?)
 Clustering (morning, evening, direction, duration)
-
+Are there stations that get skipped....have more trips that pass near them than start or end at them
 bike movement not in trips
 
 Bike data (and for stations where applicable):
@@ -35,3 +35,22 @@ crow flies distance
 probable on the ground distance
 equivalent mass transit trip
 equivalent driving trip
+
+browse by:
+age
+gender
+zipcode
+trip length
+trip duration
+trip average speed
+trip elevation change
+trip uphill
+trip downhill
+date
+time of day
+day of week
+day of year
+temperature
+humidity
+different or same start/end
+compass direction
