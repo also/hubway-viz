@@ -23,8 +23,9 @@ class PackedTripRecords
     else
       coeffs = @date_ranges[0].coeffs
     estimated_start_date = ~~ (coeffs[2] * index*index + coeffs[1] * index + coeffs[0])
-    start_date = estimated_start_date - start_date_error
-    {start_date, duration, start_station, end_station, bike_index, user_index}
+    start_ts = estimated_start_date - start_date_error
+    start_date = new Date start_ts * 60000
+    {index, start_date, duration, start_station, end_station, bike_index, user_index}
 
 load_data = (callback) ->
   xhr = new XMLHttpRequest
@@ -33,14 +34,24 @@ load_data = (callback) ->
   date_ranges = JSON.parse xhr.response
 
   xhr = new XMLHttpRequest
+  xhr.open 'GET', '/output/users.txt', false
+  xhr.send()
+  users = for line in xhr.response.split '\n'
+    [zip_code, year, gender] = line.split ','
+    zip_code = null if zip_code == ''
+    year = if year == '' then null else parseInt(year, 10)
+    gender = null if gender == ''
+    {zip_code, year, gender}
+
+  xhr = new XMLHttpRequest
   xhr.open 'GET', '/output/trips_packed', true
   xhr.responseType = 'arraybuffer'
 
   xhr.onload = (e) ->
     if @status == 200
       d = e.target.response
-      records = new hwdv.PackedTripRecords(d, date_ranges)
-      callback records
+      trips = new hwdv.PackedTripRecords(d, date_ranges)
+      callback {trips, users}
 
   xhr.send()
 
