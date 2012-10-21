@@ -18,7 +18,7 @@ class PackedTripRecords
     b >>>= 3
     duration = b & 0x1fff
     b >>>= 13
-    start_date_error = b
+    start_date_error = b << 16 >> 16
 
     if index >= @date_ranges[1].i
       coeffs = @date_ranges[1].coeffs
