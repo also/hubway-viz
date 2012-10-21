@@ -1,5 +1,3 @@
-window.hwdv = {}
-
 class PackedTripRecords
   constructor: (array_buffer, @date_ranges) ->
     @data = new Int32Array array_buffer
@@ -28,4 +26,25 @@ class PackedTripRecords
     start_date = estimated_start_date - start_date_error
     {start_date, duration, start_station, end_station, bike_index, user_index}
 
-hwdv.PackedTripRecords = PackedTripRecords
+load_data = (callback) ->
+  xhr = new XMLHttpRequest
+  xhr.open 'GET', '/output/date_ranges.json', false
+  xhr.send()
+  date_ranges = JSON.parse xhr.response
+
+  xhr = new XMLHttpRequest
+  xhr.open 'GET', '/output/trips_packed', true
+  xhr.responseType = 'arraybuffer'
+
+  xhr.onload = (e) ->
+    if @status == 200
+      d = e.target.response
+      records = new hwdv.PackedTripRecords(d, date_ranges)
+      callback records
+
+  xhr.send()
+
+window.hwdv = {
+  PackedTripRecords,
+  load_data
+}
