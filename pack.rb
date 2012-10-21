@@ -1,7 +1,7 @@
 require './data'
 
 RANGES = get_date_ranges
-MAX_DURATION = 2^13 - 1
+MAX_DURATION = 2**13 - 1
 
 File.open 'output/trips_packed', 'w' do |out|
   ARGF.each_with_index do |line, i|
@@ -26,7 +26,7 @@ File.open 'output/trips_packed', 'w' do |out|
     value |= user_index
 
     orig = [error, d, start_station_id[1...-1].to_i, end_station_id[1...-1].to_i, bike_index, user_index]
-    puts orig.join ','
+    #puts orig.join ','
     packed = [value].pack('Q<')
     out.write packed
   end
