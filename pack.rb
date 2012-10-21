@@ -3,7 +3,6 @@ require './data'
 RANGES = get_date_ranges
 MAX_DURATION = 2^13 - 1
 
-
 File.open 'output/trips_packed', 'w' do |out|
   ARGF.each_with_index do |line, i|
     id,status,duration,start_date,start_station_id,end_date,end_station_id,bike_nr,subscription_type,zip_code,birth_date,gender = line.strip.split ','
@@ -30,7 +29,5 @@ File.open 'output/trips_packed', 'w' do |out|
     puts orig.join ','
     packed = [value].pack('Q<')
     out.write packed
-    #puts unpack(packed.unpack('Q<')[0]).join(',')
-    #puts value
   end
 end
