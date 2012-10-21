@@ -1,24 +1,26 @@
 require 'date'
-records = 552074
-RECORDS_1 = 140521
-records_2 = records - RECORDS_1
+require 'json'
 
+def get_date_ranges
+  File.open 'output/date_ranges.json' do |f|
+    JSON.load f
+  end
+end
+
+#records = 552030
+#RECORDS_1 = 140478
 
 def parse_ts(s)
   DateTime.parse(s).to_time.to_i / 60
 end
 
 def estimate_t(i)
-  if i > RECORDS_1 - 1
-    first = RANGE_2.first
-    coeff = 0.65
-    intercept = 36220 - RECORDS_1 + 1
+  if i >= RANGES[1]['i']
+    coeffs = RANGES[1]['coeffs']
   else
-    first = RANGE_1.first
-    coeff = 1.29
-    intercept = 0
+    coeffs = RANGES[0]['coeffs']
   end
-  ((i + intercept) * coeff).to_i + first
+  (coeffs[2] * i**2 + coeffs[1] * i + coeffs[0]).to_i
 end
 
 def build_index(filename)
@@ -29,6 +31,21 @@ def build_index(filename)
     end
   end
   index
+end
+
+def pack(error, d, start_station_id, end_station_id, bike_index, user_index)
+  value = error
+  value <<= 13
+  value |= d
+  value <<= 7
+  value |= start_station_id.to_i
+  value <<= 7
+  value |= end_station_id.to_i
+  value <<= 10
+  value |= bike_index
+  value <<= 11
+  value |= user_index
+  value
 end
 
 def unpack(d)

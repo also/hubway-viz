@@ -21,9 +21,7 @@ File.open 'output/trips_sorted.csv' do |f|
       range_start_index = i
       range_start_ts = ts
     end
-    if i % 1000 == 0
-      date_offset_file.puts "#{i - range_start_index}\t#{ts}"
-    end
+      date_offset_file.puts "#{i}\t#{ts}"
     previous_ts = ts
   end
 end
@@ -31,12 +29,10 @@ end
 date_offset_file.close
 
 range_json = ranges.each_with_index.map do |start_index, i|
-  c, b, a = `Rscript compute_date_coeffs.R output/range_date_offsets_#{i}`.strip.split "\n"
+  coeffs = `Rscript compute_date_coeffs.R output/range_date_offsets_#{i}`.strip.split("\n").map {|s| s.to_f}
   {
-    :a => a.to_f,
-    :b => b.to_f,
-    :c => c.to_f,
-    :i => i
+    :coeffs => coeffs,
+    :i => start_index
   }
 end
 
