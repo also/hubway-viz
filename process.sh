@@ -8,11 +8,8 @@ TRIPS=output/trips_sorted.csv
 echo sorting trips
 tail -n +2 data/stations_trips/trips.csv | sort -t , -k4 > ${TRIPS}
 
-echo extracting stations
-cut -d , -f 5 ${TRIPS} | sort | uniq > output/stations
-
 echo extracting users
-cut -d , -f 10,11,12 ${TRIPS} | sort | uniq > output/users.txt
+cut -d , -f 10,11,12 ${TRIPS} | tr -d '"' | sort | uniq > output/users.txt
 
 echo extracting station pairs
 cut -d , -f 5,7 ${TRIPS} | sort | uniq > output/station_pairs.csv
@@ -32,3 +29,6 @@ PYTHONPATH=/usr/local/Cellar/gdal/1.9.2/lib/python2.7/site-packages python get_e
 echo generating routing data
 mkdir output/routing
 ./lib/python-env/bin/osm4routing -n output/routing/nodes.csv -e output/routing/edges.csv data/CambridgeMa.osm
+
+echo computing date ranges
+ruby compute_ranges.rb > output/date_ranges.json
