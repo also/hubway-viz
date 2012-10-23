@@ -13,95 +13,72 @@ hwdv.load_data (data) ->
   dates = date.group()
   start_hour = trips.dimension (d) -> d.start_date.getHours() + d.start_date.getMinutes() / 60
   start_hours = start_hour.group Math.floor
-  duration = trips.dimension (d) -> d.duration
-  durations = duration.group (d) -> ~~ (d / 5 * 60)
+  start_day_of_week = trips.dimension (d) -> (d.start_date.getDay() + 1) % 7
+  start_day_of_weeks = start_day_of_week.group()
+  duration = trips.dimension (d) ->  (d.duration)
+  durations = duration.group Math.floor
   gender = trips.dimension (d) -> data.users[d.user_index].gender
   genders = gender.group()
   console.log "top durations:", duration.top 10
   console.log "genders: ", genders.all()
 
-  window.start_hour = start_hour
-  window.start_hours = start_hours
-  window.all = all
+  charts = [
+    barChart()
+        .dimension(start_hour)
+        .group(start_hours)
+      .x(d3.scale.linear()
+        .domain([0, 24])
+        .rangeRound([0, 10 * 24])),
 
-  addCharts()
+    barChart()
+        .dimension(start_day_of_week)
+        .group(start_day_of_weeks)
+        .round(Math.floor)
+      .x(d3.scale.linear()
+        .domain([0, 7])
+        .rangeRound([0, 10 * 7])),
 
-`
-function addCharts() {
-    var charts = [
+    barChart()
+        .dimension(duration)
+        .group(durations)
+      .x(d3.scale.linear()
+        .domain([0, 3000])
+        .rangeRound([0, 400])),
 
-  barChart()
-      .dimension(start_hour)
-      .group(start_hours)
-    .x(d3.scale.linear()
-      .domain([0, 24])
-      .rangeRound([0, 10 * 24])),
-/*
-  barChart()
-      .dimension(delay)
-      .group(delays)
-    .x(d3.scale.linear()
-      .domain([-60, 150])
-      .rangeRound([0, 10 * 21])),
+    barChart()
+        .dimension(date)
+        .group(dates)
+        .round(d3.time.day.round)
+      .x(d3.time.scale()
+        .domain([new Date(2011, 6, 25), new Date(2012, 9, 5)])
+        .rangeRound([0, 1280]))
+       .barWidth(1)
+  ]
+  
+  # Given our array of charts, which we assume are in the same order as the
+  # .chart elements in the DOM, bind the charts to the DOM and render them.
+  # We also listen to the chart's brush events to update the display.
 
-  barChart()
-      .dimension(distance)
-      .group(distances)
-    .x(d3.scale.linear()
-      .domain([0, 2000])
-      .rangeRound([0, 10 * 40])),
+  # Renders the specified chart or list.
+  render = (method) ->
+    d3.select(this).call(method)
 
-  barChart()
-      .dimension(date)
-      .group(dates)
-      .round(d3.time.day.round)
-    .x(d3.time.scale()
-      .domain([new Date(2001, 0, 1), new Date(2001, 3, 1)])
-      .rangeRound([0, 10 * 90]))
-      .filter([new Date(2001, 1, 1), new Date(2001, 2, 1)])
-*/
-];
+  # Whenever the brush moves, re-rendering everything.
+  renderAll = ->
+    console.log 'renderAll'
+    chart.each(render)
+    d3.select("#active").text(formatNumber(all.value()))
 
-// Given our array of charts, which we assume are in the same order as the
-// .chart elements in the DOM, bind the charts to the DOM and render them.
-// We also listen to the chart's brush events to update the display.
-var chart = d3.selectAll(".chart")
-    .data(charts)
-    .each(function(chart) { chart.on("brush", renderAll).on("brushend", renderAll); });
+  window.filter = (filters) ->
+    filters.forEach((d, i) -> charts[i].filter(d) )
+    renderAll()
 
-    /*
-// Render the initial lists.
-var list = d3.selectAll(".list")
-    .data([flightList]);
-*/
+  window.reset = (i) ->
+    charts[i].filter(null);
+    renderAll();
 
-/*
-// Render the total.
-d3.selectAll("#total")
-    .text(formatNumber(flight.size()));
-*/
-renderAll();
+  chart = d3.selectAll(".chart")
+      .data(charts)
+      .each((chart) -> chart.on("brush", renderAll).on("brushend", renderAll))
 
-// Renders the specified chart or list.
-function render(method) {
-  d3.select(this).call(method);
-}
-
-// Whenever the brush moves, re-rendering everything.
-function renderAll() {
-  chart.each(render);
-  //list.each(render);
-  d3.select("#active").text(formatNumber(all.value()));
-}
-
-window.filter = function(filters) {
-  filters.forEach(function(d, i) { charts[i].filter(d); });
-  renderAll();
-};
-
-window.reset = function(i) {
-  charts[i].filter(null);
-  renderAll();
-};
-}
-`
+  renderAll()
