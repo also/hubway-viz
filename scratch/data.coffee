@@ -36,12 +36,13 @@ load_data = (callback) ->
   xhr = new XMLHttpRequest
   xhr.open 'GET', '/output/users.txt', false
   xhr.send()
-  users = for line in xhr.response.split '\n'
+  users = for line in xhr.response.split '\r\n'
     [zip_code, year, gender] = line.split ','
     zip_code = null if zip_code == ''
     year = if year == '' then null else parseInt(year, 10)
     gender = null if gender == ''
-    {zip_code, year, gender}
+    registered = !!(gender or year or zip_code)
+    {zip_code, year, gender, registered}
 
   xhr = new XMLHttpRequest
   xhr.open 'GET', '/output/trips_packed', true

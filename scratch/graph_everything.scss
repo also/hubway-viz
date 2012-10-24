@@ -1,8 +1,7 @@
-@import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,700);
-
 body {
   font-family: "Helvetica Neue";
   margin: 10px 10px;
+  color: #333;
 }
 
 #body {
@@ -82,22 +81,6 @@ h1, h2 {
 .brush .resize path {
   fill: #eee;
   stroke: #666;
-}
-
-#hour-chart {
-  width: 260px;
-}
-
-#delay-chart {
-  width: 230px;
-}
-
-#distance-chart {
-  width: 420px;
-}
-
-#date-chart {
-  width: 1824px;
 }
 
 aside {

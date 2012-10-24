@@ -17,19 +17,21 @@ window.barChart = ->
   brushDirty = null
   dimension = null
   group = null
+  groupFilter = -> true
   round = null
+  width = null
 
   chart = (div) ->
-    width = x_scale.range()[1]
+    width ?= x_scale.range()[1]
     height = y_scale.range()[0]
 
-    y_scale.domain([0, group.top(1)[0].value])
+    y_scale.domain([0, group.top(100).filter(groupFilter)[0].value])
 
     barPath = (groups) ->
       path = []
       i = -1
       n = groups.length
-      d
+      d = null
       while (++i < n)
         d = groups[i]
         path.push("M", x_scale(d.key), ",", height, "V", y_scale(d.value), "h" + barWidth + "V", height)
@@ -78,7 +80,7 @@ window.barChart = ->
             .data(["background", "foreground"])
           .enter().append("path")
             .attr("class", (d) -> "#{d} bar")
-            .datum(group.all());
+            .datum(group.all().filter(groupFilter));
 
         g.selectAll(".foreground.bar")
             .attr("clip-path", "url(#clip-" + id + ")")
@@ -156,6 +158,11 @@ window.barChart = ->
     y_scale = _
     chart
 
+  chart.width = (_) ->
+    return width if !arguments.length
+    width = _
+    chart
+
   chart.dimension = (_) ->
     return dimension if (!arguments.length)
     dimension = _
@@ -173,8 +180,13 @@ window.barChart = ->
     chart
 
   chart.group = (_) ->
-    ireturn group if (!arguments.length)
+    return group if (!arguments.length)
     group = _
+    chart
+
+  chart.groupFilter = (_) ->
+    return groupFilter if !arguments.length
+    groupFilter = _
     chart
 
   chart.round = (_) ->
