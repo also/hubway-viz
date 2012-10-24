@@ -32,3 +32,6 @@ mkdir output/routing
 
 echo computing date ranges
 ruby compute_ranges.rb > output/date_ranges.json
+
+echo converting zips to geojson
+ogr2ogr -f geoJSON output/zips.json data/tl_2010_25_zcta510/tl_2010_25_zcta510.shp
