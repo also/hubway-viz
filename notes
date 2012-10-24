@@ -79,3 +79,33 @@ ogrinfo data/CambridgeMa-shp/roads.shp roads  | grep type | cut -d = -f 2  |sort
 need to get rid of parking lots as roads, also maybe some paths, like mt auburn cemetary which are closed to bikes
 
 hourly climate data: http://lwf.ncdc.noaa.gov/oa/climate/climatedata.html#hourly -> http://cdo.ncdc.noaa.gov/pls/plclimprod/poemain.accessrouter?datasetabbv=DS3505
+
+Looks like the data is recorded hourly at the 54, and on the hour every 3 hours.
+hourly type:
+        7: ASOS/AWOS observation merged with DATSAV3 observation
+        FM-15: METAR Aviation routine weather report
+3 hours:
+        4: DATSAV3 observation
+        FM-12: SYNOP Report of surface observation form a fixed land station
+
+THIS LOOKS SIMPLER: http://cdo.ncdc.noaa.gov/qclcd/QCLCD?prior=N
+
+It's obnoxious that trips.csv and stations.csv aren't qouted the same. station ids in trips have quotes, not in stations
+
+There are some overlapping trips:
+
+"59042","Closed",419.999999954598,"11-09-11 17:08:00","41","11-09-11 17:15:00","41","B00441","Casual","","",""
+"59073","Closed",2159.99999996857,"11-09-11 17:14:00","41","11-09-11 17:50:00","15","B00441","Casual","","",""
+
+"111025","Closed",839.999999909196,"11-10-15 14:28:00","27","11-10-15 14:42:00","32","B00171","Registered","","1981","Male"
+"111058","Closed",419.999999954598,"11-10-15 14:41:00","32","11-10-15 14:48:00","32","B00171","Casual","","",""
+
+"293342","Closed",239.999999996508,"12-06-03 15:24:00","41","12-06-03 15:28:00","41","B00349","Casual","","",""
+"293350","Closed",1980.00000001048,"12-06-03 15:26:00","41","12-06-03 15:59:00","34","B00349","Casual","","",""
+
+"542588","Closed",780.00000002794,"12-09-06 18:41:00","12","12-09-06 18:54:00","36","T01328","Registered","","1963","Female"
+"542642","Closed",5160.00000000349,"12-09-06 18:51:00","36","12-09-06 20:17:00","36","T01328","Casual","","",""
+
+
+download the zip code shapefile from here: http://www.census.gov/geo/www/tiger/tgrshp2010/usernotes.html
+http://vallandingham.me/shapefile_to_geojson.html

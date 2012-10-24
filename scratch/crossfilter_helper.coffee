@@ -40,7 +40,7 @@ window.barChart = ->
       x = if e then 1 else -1
       y = height / 3
 
-      result = ("M" + (.5 * x) + "," + y \
+      ("M" + (.5 * x) + "," + y \
       + "A6,6 0 0 " + e + " " + (6.5 * x) + "," + (y + 6) \
       + "V" + (2 * y - 6) \
       + "A6,6 0 0 " + e + " " + (.5 * x) + "," + (2 * y) \
@@ -49,8 +49,6 @@ window.barChart = ->
       + "V" + (2 * y - 8) \
       + "M" + (4.5 * x) + "," + (y + 8) \
       + "V" + (2 * y - 8))
-      console.log result
-      result
 
     div.each ->
       div = d3.select(this)
