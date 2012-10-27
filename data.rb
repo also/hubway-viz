@@ -7,9 +7,6 @@ def get_date_ranges
   end
 end
 
-#records = 552030
-#RECORDS_1 = 140478
-
 def parse_ts(s)
   DateTime.parse(s).to_time.to_i / 60
 end
@@ -65,7 +62,4 @@ end
 
 BIKE_INDEX = build_index 'output/bikes.txt'
 USER_INDEX = build_index 'output/users.txt'
-
-RANGE_1 = parse_ts('2011-07-28 07:12:00-07') .. parse_ts('2011-11-30 20:58:00-08')
-RANGE_2 = parse_ts('2012-03-13 15:31:00-07') .. parse_ts('2012-10-01 17:32:00-07')
 

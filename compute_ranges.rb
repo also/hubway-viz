@@ -37,4 +37,3 @@ range_json = ranges.each_with_index.map do |start_index, i|
 end
 
 puts range_json.to_json
-

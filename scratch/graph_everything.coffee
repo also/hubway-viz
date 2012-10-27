@@ -21,7 +21,6 @@ hwdv.load_data (data) ->
   registration = trips.dimension (d) -> data.users[d.user_index].registered
   registrations = registration.group()
 
-  console.log genders.all()
   charts = [
     barChart()
         .dimension(start_hour)
@@ -87,7 +86,6 @@ hwdv.load_data (data) ->
         .range([0, 20]))
       .barWidth(19)
       .width(40)
-
   ]
   
   # Given our array of charts, which we assume are in the same order as the
