@@ -13,7 +13,7 @@ makeMap = (zips) ->
     viz = div
       .append("svg:svg")
       .attr("width", 900)
-      .attr("height", 900)
+      .attr("height", 500)
 
     paths = viz.append("svg:g")
       .attr("class", "tracts blues")

@@ -14,9 +14,10 @@ footer {
 }
 
 h1 {
-  font-size: 96px;
+  font-size: 40px;
   margin-top: .3em;
   margin-bottom: 0;
+  color: #888;
 }
 
 h1 + h2 {
@@ -29,7 +30,7 @@ h2 {
 }
 
 h1, h2 {
-  font-family: "Yanone Kaffeesatz";
+  font-weight: 200;
   text-rendering: optimizeLegibility;
 }
 
