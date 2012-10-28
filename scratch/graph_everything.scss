@@ -89,3 +89,11 @@ aside {
   font-size: smaller;
   width: 220px;
 }
+
+#map path {
+  stroke: #fff;
+  &.selected {
+    stroke: red;
+    fill: red;
+  }
+}
