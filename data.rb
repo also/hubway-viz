@@ -40,14 +40,14 @@ def pack(error, d, start_station_id, end_station_id, bike_index, user_index)
   value |= end_station_id.to_i
   value <<= 10
   value |= bike_index
-  value <<= 11
+  value <<= 12
   value |= user_index
   value
 end
 
 def unpack(d)
-  user_index = d & 2**11 - 1
-  d >>= 11
+  user_index = d & 2**12 - 1
+  d >>= 12
   bike_index = d & 2**10 - 1
   d >>= 10
   end_station = d & 2**7 - 1
@@ -56,8 +56,8 @@ def unpack(d)
   d >>= 7
   duration = d & 2**13 - 1
   d >>= 13
-  date = d
-  [date, duration, start_station, end_station, bike_index, user_index]
+  error = d
+  [error, duration, start_station, end_station, bike_index, user_index]
 end
 
 BIKE_INDEX = build_index 'output/bikes.txt'

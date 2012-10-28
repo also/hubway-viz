@@ -6,17 +6,17 @@ class PackedTripRecords
   get: (index) ->
     a = @data[index * 2]
     b = @data[index * 2 + 1]
-    user_index = a & 0x7ff
-    a >>>= 11
+    user_index = a & 0xfff
+    a >>>= 12
     bike_index = a & 0x3ff
     a >>>= 10
     end_station = a & 0x7f
     a >>>= 7
-    start_station = (a | (b << 4)) & 0x7f
-    b >>>= 3
+    start_station = (a | (b << 3)) & 0x7f
+    b >>>= 4
     duration = b & 0x1fff
     b >>>= 13
-    start_date_error = b << 16 >> 16
+    start_date_error = b << 17 >> 17
 
     if index >= @date_ranges[1].i
       coeffs = @date_ranges[1].coeffs
@@ -36,7 +36,7 @@ load_data = (callback) ->
   xhr = new XMLHttpRequest
   xhr.open 'GET', '/output/users.txt', false
   xhr.send()
-  users = for line in xhr.response.split '\r\n'
+  users = for line in xhr.response.split '\n'
     [zip_code, year, gender] = line.split ','
     zip_code = null if zip_code == ''
     year = if year == '' then null else parseInt(year, 10)
