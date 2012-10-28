@@ -153,6 +153,11 @@ window.barChart = ->
     brush.x(x_scale)
     chart
 
+  chart.labels = (_) ->
+    return axis.tickFormat() if !arguments.length
+    axis.tickFormat _
+    chart
+
   chart.y = (_) ->
     return y_scale if (!arguments.length)
     y_scale = _

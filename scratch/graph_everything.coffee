@@ -117,6 +117,7 @@ hwdv.load_data (data) ->
       .x(d3.scale.linear()
         .domain([0, 7])
         .rangeRound([0, 17 * 7]))
+        .labels((d, i) -> 'SSMTWTF'[i])
         .barWidth(16),
 
     barChart()
