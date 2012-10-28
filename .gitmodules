@@ -13,3 +13,6 @@
 [submodule "scratch/d3"]
 	path = scratch/d3
 	url = https://github.com/mbostock/d3.git
+[submodule "lib/simpleserver"]
+	path = lib/simpleserver
+	url = https://github.com/also/simpleserver.git
