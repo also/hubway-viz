@@ -45,6 +45,11 @@ load_data = (callback) ->
     {zip_code, year, gender, registered}
 
   xhr = new XMLHttpRequest
+  xhr.open 'GET', '/output/zips_filtered.json', false
+  xhr.send()
+  zips_geo = JSON.parse xhr.response
+
+  xhr = new XMLHttpRequest
   xhr.open 'GET', '/output/trips_packed', true
   xhr.responseType = 'arraybuffer'
 
@@ -52,7 +57,7 @@ load_data = (callback) ->
     if @status == 200
       d = e.target.response
       trips = new hwdv.PackedTripRecords(d, date_ranges)
-      callback {trips, users}
+      callback {trips, users, zips_geo}
 
   xhr.send()
 
