@@ -70,7 +70,7 @@ makeMap = (zips) ->
   d3.rebind map, dispatch, 'on'
   map
 
-hwdv.load_data (data) ->
+hwdv.load_data '/output', (data) ->
   user_indexes = {}
   records = for i in [0...data.trips.length]
     r = data.trips.get i

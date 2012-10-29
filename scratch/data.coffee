@@ -1,3 +1,12 @@
+`function toArrayBuffer(buffer) {
+    var ab = new ArrayBuffer(buffer.length);
+    var view = new Uint8Array(ab);
+    for (var i = 0; i < buffer.length; ++i) {
+        view[i] = buffer[i];
+    }
+    return ab;
+}`
+
 class PackedTripRecords
   constructor: (array_buffer, @date_ranges) ->
     @data = new Int32Array array_buffer
@@ -36,35 +45,36 @@ parse_users = (str) ->
     registered = !!(gender or year or zip_code)
     {zip_code, year, gender, registered}
 
-load_data = (callback) ->
-  xhr = new XMLHttpRequest
-  xhr.open 'GET', '/output/date_ranges.json', false
-  xhr.send()
-  date_ranges = JSON.parse xhr.response
+load_data = (path, callback) ->
+  fs = null
+  if module?
+    fs = require 'fs'
+    read_text_sync = (filename) -> fs.readFileSync "#{path}/#{filename}", 'utf8'
+    read_bin_async = (filename, callback) -> fs.readFile "#{path}/#{filename}", (err, data) ->
+      callback toArrayBuffer data
+  else
+    read_text_sync = (filename) ->
+      xhr = new XMLHttpRequest
+      xhr.open 'GET', "#{path}/#{filename}", false
+      xhr.send()
+      xhr.response
+    read_bin_async = (filename, callback) ->
+      xhr = new XMLHttpRequest
+      xhr.open 'GET', "#{path}/#{filename}", true
+      xhr.responseType = 'arraybuffer'
+      xhr.onload = ->
+        callback xhr.response
+      xhr.send()
 
-  xhr = new XMLHttpRequest
-  xhr.open 'GET', '/output/users.txt', false
-  xhr.send()
-  users = parse_users xhr.response
+  date_ranges = JSON.parse read_text_sync 'date_ranges.json'
+  users = parse_users read_text_sync 'users.txt'
+  zips_geo = JSON.parse read_text_sync 'zips_filtered.json'
 
-  xhr = new XMLHttpRequest
-  xhr.open 'GET', '/output/zips_filtered.json', false
-  xhr.send()
-  zips_geo = JSON.parse xhr.response
+  read_bin_async '/output/trips_packed', (d) ->
+    trips = new hwdv.PackedTripRecords(d, date_ranges)
+    callback {trips, users, zips_geo}
 
-  xhr = new XMLHttpRequest
-  xhr.open 'GET', '/output/trips_packed', true
-  xhr.responseType = 'arraybuffer'
-
-  xhr.onload = (e) ->
-    if @status == 200
-      d = e.target.response
-      trips = new hwdv.PackedTripRecords(d, date_ranges)
-      callback {trips, users, zips_geo}
-
-  xhr.send()
-
-@hwdv = {
+hwdv = @hwdv = {
   PackedTripRecords,
   load_data,
   parse_users
