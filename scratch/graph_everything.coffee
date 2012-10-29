@@ -79,8 +79,11 @@ hwdv.load_data '/output', (data) ->
   #  if !user_indexes[''+i]
   #    console.log i
 
-  filter = hwdv.create_filters data
+  hwdv.load_crossfilter_indexes '/output', (index) ->
+    filter = hwdv.create_filters data, index
+    creat_charts data, filter
 
+creat_charts = (data, filter) ->
   charts = [
     barChart()
         .dimension(filter.dimension.start_hour)

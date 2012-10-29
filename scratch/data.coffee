@@ -34,6 +34,7 @@ class PackedTripRecords
     estimated_start_date = ~~ (coeffs[2] * index*index + coeffs[1] * index + coeffs[0])
     start_ts = estimated_start_date - start_date_error
     start_date = new Date start_ts * 60000
+
     {index, start_date, duration, start_station, end_station, bike_index, user_index}
 
 parse_users = (str) ->
@@ -45,8 +46,25 @@ parse_users = (str) ->
     registered = !!(gender or year or zip_code)
     {zip_code, year, gender, registered}
 
+load_crossfilter_indexes = (path, callback) ->
+  names = ['date', 'start_hour', 'start_day_of_week', 'duration', 'gender', 'age', 'registration', 'zip']
+  indexes_to_read = 0
+  indexes = {}
+
+  read_index = (name) ->
+    indexes_to_read++
+    xhr = new XMLHttpRequest
+    xhr.open 'GET', "#{path}/crossfilter_index/#{name}", true
+    xhr.responseType = 'arraybuffer'
+    xhr.onload = ->
+      indexes[name] = new Int32Array xhr.response
+      indexes_to_read--
+      callback indexes if indexes_to_read == 0
+    xhr.send()
+
+  read_index name for name in names
+
 load_data = (path, callback) ->
-  fs = null
   if module?
     fs = require 'fs'
     read_text_sync = (filename) -> fs.readFileSync "#{path}/#{filename}", 'utf8'
@@ -74,26 +92,27 @@ load_data = (path, callback) ->
     trips = new hwdv.PackedTripRecords(d, date_ranges)
     callback {trips, users, zips_geo}
 
-create_filters = (data) ->
+create_filters = (data, index) ->
+  index ?= {}
   records = for i in [0...data.trips.length]
     data.trips.get i
   trips = crossfilter records
   all = trips.groupAll()
-  date = trips.dimension (d) -> d3.time.day(d.start_date)
+  date = trips.dimension ((d) -> d3.time.day(d.start_date)), index.date
   dates = date.group()
-  start_hour = trips.dimension (d) -> d.start_date.getHours() + d.start_date.getMinutes() / 60
+  start_hour = trips.dimension ((d) -> d.start_date.getHours() + d.start_date.getMinutes() / 60), index.start_hour
   start_hours = start_hour.group Math.floor
-  start_day_of_week = trips.dimension (d) -> (d.start_date.getDay() + 1) % 7
+  start_day_of_week = trips.dimension ((d) -> (d.start_date.getDay() + 1) % 7), index.start_day_of_week
   start_day_of_weeks = start_day_of_week.group()
-  duration = trips.dimension (d) -> d.duration
+  duration = trips.dimension ((d) -> d.duration), index.duration
   durations = duration.group()
-  gender = trips.dimension (d) -> (data.users[d.user_index].gender ? "Unknown")[0]
+  gender = trips.dimension ((d) -> (data.users[d.user_index].gender ? "Unknown")[0]), index.gender
   genders = gender.group()
-  age = trips.dimension (d) -> 2012 - (data.users[d.user_index].year ? 2012)
+  age = trips.dimension ((d) -> 2012 - (data.users[d.user_index].year ? 2012)), index.age
   ages = age.group()
-  registration = trips.dimension (d) -> data.users[d.user_index].registered
+  registration = trips.dimension ((d) -> data.users[d.user_index].registered), index.registration
   registrations = registration.group()
-  zip = trips.dimension (d) -> data.users[d.user_index].zip_code ? ''
+  zip = trips.dimension ((d) -> data.users[d.user_index].zip_code ? ''), index.zip
   zips = zip.group()
   {
     trips,
@@ -105,6 +124,7 @@ create_filters = (data) ->
 hwdv = @hwdv = {
   PackedTripRecords,
   load_data,
+  load_crossfilter_indexes,
   parse_users,
   create_filters
 }
