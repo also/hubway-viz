@@ -74,8 +74,37 @@ load_data = (path, callback) ->
     trips = new hwdv.PackedTripRecords(d, date_ranges)
     callback {trips, users, zips_geo}
 
+create_filters = (data) ->
+  records = for i in [0...data.trips.length]
+    data.trips.get i
+  trips = crossfilter records
+  all = trips.groupAll()
+  date = trips.dimension (d) -> d3.time.day(d.start_date)
+  dates = date.group()
+  start_hour = trips.dimension (d) -> d.start_date.getHours() + d.start_date.getMinutes() / 60
+  start_hours = start_hour.group Math.floor
+  start_day_of_week = trips.dimension (d) -> (d.start_date.getDay() + 1) % 7
+  start_day_of_weeks = start_day_of_week.group()
+  duration = trips.dimension (d) -> d.duration
+  durations = duration.group()
+  gender = trips.dimension (d) -> (data.users[d.user_index].gender ? "Unknown")[0]
+  genders = gender.group()
+  age = trips.dimension (d) -> 2012 - (data.users[d.user_index].year ? 2012)
+  ages = age.group()
+  registration = trips.dimension (d) -> data.users[d.user_index].registered
+  registrations = registration.group()
+  zip = trips.dimension (d) -> data.users[d.user_index].zip_code ? ''
+  zips = zip.group()
+  {
+    trips,
+    all,
+    dimension: {date, start_hour, start_day_of_week, duration, gender, age, registration, zip},
+    group: {dates, start_hours, start_day_of_weeks, durations, genders, ages, registrations, zips}
+  }
+
 hwdv = @hwdv = {
   PackedTripRecords,
   load_data,
-  parse_users
+  parse_users,
+  create_filters
 }

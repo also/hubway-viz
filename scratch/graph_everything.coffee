@@ -71,48 +71,27 @@ makeMap = (zips) ->
   map
 
 hwdv.load_data '/output', (data) ->
-  user_indexes = {}
-  records = for i in [0...data.trips.length]
-    r = data.trips.get i
-    user_indexes[''+ r.user_index] = true
-    r
+  #user_indexes = {}
+  #  user_indexes[''+ r.user_index] = true
+  #  r
 
-  for i in [0...data.users.length]
-    if !user_indexes[''+i]
-      console.log i
+  #for i in [0...data.users.length]
+  #  if !user_indexes[''+i]
+  #    console.log i
 
-  trips = crossfilter records
-  all = trips.groupAll()
-  # A nest operator, for grouping the trip list.
-  nestByDate = d3.nest().key (d) -> d3.time.day(d.start_date)
-  date = trips.dimension (d) -> d3.time.day(d.start_date)
-  dates = date.group()
-  start_hour = trips.dimension (d) -> d.start_date.getHours() + d.start_date.getMinutes() / 60
-  start_hours = start_hour.group Math.floor
-  start_day_of_week = trips.dimension (d) -> (d.start_date.getDay() + 1) % 7
-  start_day_of_weeks = start_day_of_week.group()
-  duration = trips.dimension (d) -> d.duration
-  durations = duration.group()
-  gender = trips.dimension (d) -> (data.users[d.user_index].gender ? "Unknown")[0]
-  genders = gender.group()
-  age = trips.dimension (d) -> 2012 - (data.users[d.user_index].year ? 2012)
-  ages = age.group()
-  registration = trips.dimension (d) -> data.users[d.user_index].registered
-  registrations = registration.group()
-  zip = trips.dimension (d) -> data.users[d.user_index].zip_code ? ''
-  zips = zip.group()
+  filter = hwdv.create_filters data
 
   charts = [
     barChart()
-        .dimension(start_hour)
-        .group(start_hours)
+        .dimension(filter.dimension.start_hour)
+        .group(filter.group.start_hours)
       .x(d3.scale.linear()
         .domain([0, 24])
         .rangeRound([0, 10 * 24])),
 
     barChart()
-        .dimension(start_day_of_week)
-        .group(start_day_of_weeks)
+        .dimension(filter.dimension.start_day_of_week)
+        .group(filter.group.start_day_of_weeks)
         .round(Math.floor)
       .x(d3.scale.linear()
         .domain([0, 7])
@@ -121,8 +100,8 @@ hwdv.load_data '/output', (data) ->
         .barWidth(16),
 
     barChart()
-        .dimension(duration)
-        .group(durations)
+        .dimension(filter.dimension.duration)
+        .group(filter.group.durations)
         .round(Math.floor)
       .x(d3.scale.linear()
         .domain([0, 60])
@@ -130,8 +109,8 @@ hwdv.load_data '/output', (data) ->
       .barWidth(6),
 
     barChart()
-        .dimension(age)
-        .group(ages)
+        .dimension(filter.dimension.age)
+        .group(filter.group.ages)
         .groupFilter((d) -> d.key != 0)
         .round(Math.floor)
       .x(d3.scale.linear()
@@ -140,8 +119,8 @@ hwdv.load_data '/output', (data) ->
       .barWidth(2),
 
     barChart()
-        .dimension(date)
-        .group(dates)
+        .dimension(filter.dimension.date)
+        .group(filter.group.dates)
         .round(d3.time.day.round)
       .x(d3.time.scale()
         .domain([new Date(2011, 6, 25), new Date(2012, 9, 5)])
@@ -149,8 +128,8 @@ hwdv.load_data '/output', (data) ->
        .barWidth(1),
 
     barChart()
-        .dimension(gender)
-        .group(genders)
+        .dimension(filter.dimension.gender)
+        .group(filter.group.genders)
         .groupFilter((d) -> d.key != 'U')
         .round(Math.floor)
       .x(d3.scale.ordinal()
@@ -160,8 +139,8 @@ hwdv.load_data '/output', (data) ->
       .width(40)
 
     barChart()
-        .dimension(registration)
-        .group(registrations)
+        .dimension(filter.dimension.registration)
+        .group(filter.group.registrations)
         .round(Math.floor)
       .x(d3.scale.ordinal()
         .domain([false, true])
@@ -182,7 +161,7 @@ hwdv.load_data '/output', (data) ->
   renderAll = ->
     chart.each(render)
     map.update()
-    d3.select("#active").text(formatNumber(all.value()))
+    d3.select("#active").text(formatNumber(filter.all.value()))
 
   window.filter = (filters) ->
     filters.forEach((d, i) -> charts[i].filter(d) )
@@ -197,8 +176,8 @@ hwdv.load_data '/output', (data) ->
       .each((chart) -> chart.on("brush", renderAll).on("brushend", renderAll))
 
   map = makeMap(data.zips_geo)
-    .dimension(zip)
-    .group(zips)
+    .dimension(filter.dimension.zip)
+    .group(filter.group.zips)
     .center([-71.058543, 42.367021])
     .on('filter', renderAll)
   map d3.select("#map")
