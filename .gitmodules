@@ -16,3 +16,6 @@
 [submodule "lib/simpleserver"]
 	path = lib/simpleserver
 	url = https://github.com/also/simpleserver.git
+[submodule "lib/osm4routing"]
+	path = lib/osm4routing
+	url = https://github.com/Tristramg/osm4routing.git
