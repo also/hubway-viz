@@ -27,6 +27,15 @@ class PackedTripRecords
     start_date = new Date start_ts * 60000
     {index, start_date, duration, start_station, end_station, bike_index, user_index}
 
+parse_users = (str) ->
+  for line in str.split '\n'
+    [zip_code, year, gender] = line.split ','
+    zip_code = null if zip_code == ''
+    year = if year == '' then null else parseInt(year, 10)
+    gender = null if gender == ''
+    registered = !!(gender or year or zip_code)
+    {zip_code, year, gender, registered}
+
 load_data = (callback) ->
   xhr = new XMLHttpRequest
   xhr.open 'GET', '/output/date_ranges.json', false
@@ -36,13 +45,7 @@ load_data = (callback) ->
   xhr = new XMLHttpRequest
   xhr.open 'GET', '/output/users.txt', false
   xhr.send()
-  users = for line in xhr.response.split '\n'
-    [zip_code, year, gender] = line.split ','
-    zip_code = null if zip_code == ''
-    year = if year == '' then null else parseInt(year, 10)
-    gender = null if gender == ''
-    registered = !!(gender or year or zip_code)
-    {zip_code, year, gender, registered}
+  users = parse_users xhr.response
 
   xhr = new XMLHttpRequest
   xhr.open 'GET', '/output/zips_filtered.json', false
@@ -61,7 +64,8 @@ load_data = (callback) ->
 
   xhr.send()
 
-window.hwdv = {
+@hwdv = {
   PackedTripRecords,
-  load_data
+  load_data,
+  parse_users
 }
