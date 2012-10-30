@@ -56,7 +56,7 @@
         // setup default three.js stuff
         renderer = new THREE.WebGLRenderer();
         renderer.setSize(CONS.WIDTH, CONS.HEIGHT);
-        renderer.setClearColor(0x0000cc);
+        renderer.setClearColorHex(0xdedede);
         $("#main_map").append(renderer.domElement);
 
         camera = new THREE.PerspectiveCamera(CONS.VIEW_ANGLE, CONS.WIDTH / CONS.HEIGHT, CONS.NEAR, CONS.FAR);
