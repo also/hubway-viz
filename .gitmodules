@@ -19,3 +19,9 @@
 [submodule "lib/osm4routing"]
 	path = lib/osm4routing
 	url = https://github.com/Tristramg/osm4routing.git
+[submodule "scratch/three.js"]
+	path = scratch/three.js
+	url = https://github.com/mrdoob/three.js.git
+[submodule "scratch/jquery"]
+	path = scratch/jquery
+	url = https://github.com/jquery/jquery.git
