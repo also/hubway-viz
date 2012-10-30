@@ -81,7 +81,8 @@
         var texture = THREE.ImageUtils.loadTexture('/output/lidar.png', null, loaded);
 
         // load two other textures we'll use to make the map look more real
-        var detailTexture = THREE.ImageUtils.loadTexture("/output/lidar.png", null, loaded);
+        var detailTexture = THREE.ImageUtils.loadTexture("/scratch/grasslight-big.jpg", null, loaded);
+        detailTexture.wrapS = detailTexture.wrapT = THREE.RepeatWrapping
 
 
         // the following configuration defines how the terrain is rendered
@@ -89,19 +90,19 @@
         var uniformsTerrain = THREE.UniformsUtils.clone(terrainShader.uniforms);
 
         // how to treat abd scale the normal texture
-        uniformsTerrain[ "tNormal" ].texture = detailTexture;
+        uniformsTerrain[ "tNormal" ].value = detailTexture;
         uniformsTerrain[ "uNormalScale" ].value = 1;
 
         // the displacement determines the height of a vector, mapped to
         // the heightmap
-        uniformsTerrain[ "tDisplacement" ].texture = texture;
+        uniformsTerrain[ "tDisplacement" ].value = texture;
         uniformsTerrain[ "uDisplacementScale" ].value = 100;
 
         // the following textures can be use to finetune how
         // the map is shown. These are good defaults for simple
         // rendering
-        uniformsTerrain[ "tDiffuse1" ].texture = detailTexture;
-        uniformsTerrain[ "tDetail" ].texture = detailTexture;
+        uniformsTerrain[ "tDiffuse1" ].value = detailTexture;
+        uniformsTerrain[ "tDetail" ].value = detailTexture;
         uniformsTerrain[ "enableDiffuse1" ].value = true;
         uniformsTerrain[ "enableDiffuse2" ].value = true;
         uniformsTerrain[ "enableSpecular" ].value = true;
@@ -125,7 +126,9 @@
             fragmentShader:terrainShader.fragmentShader,
             lights:true,
             fog:false
-        });
+            });
+
+        //var material = new THREE.MeshBasicMaterial({wireframe: true})
 
         // we use a plain to render as terrain
         var geometryTerrain = new THREE.PlaneGeometry(2000, 4000, 256, 256);
