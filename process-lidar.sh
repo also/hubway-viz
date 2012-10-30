@@ -14,4 +14,4 @@ echo generating slope
 gdaldem slope data/lidar-3785.tif data/lidar-slope-3785.tif
 
 echo generating png
-gdal_translate -b 1 -of PNG -outsize 1600 1200 -scale -20 100 data/lidar.tif output/lidar.png
+gdal_translate -b 1 -of PNG -outsize 1600 1200 -scale 0 100 data/lidar.tif output/lidar.png
