@@ -25,3 +25,6 @@
 [submodule "scratch/jquery"]
 	path = scratch/jquery
 	url = https://github.com/jquery/jquery.git
+[submodule "scratch/globe"]
+	path = scratch/globe
+	url = https://github.com/also/globe.git
