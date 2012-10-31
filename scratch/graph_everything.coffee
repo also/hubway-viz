@@ -21,7 +21,7 @@ makeMap = (zips) ->
       .data(zips.features)
     paths.enter().append("svg:path")
       .attr('d', path)
-      .attr('fill', colorbrewer.Blues[9][0])
+      .attr('fill', colorbrewer.Greens[9][0])
       .attr('data-zip', (d) -> d.properties.ZCTA5CE10)
       .on('click', (d) ->
         path = d3.select(this)
@@ -65,7 +65,7 @@ makeMap = (zips) ->
     for g in group.all()
       m[g.key] = g.value
 
-    paths.attr('fill', (d) -> colorbrewer.Blues[9][scale(m[d.properties.ZCTA5CE10])])
+    paths.attr('fill', (d) -> colorbrewer.Greens[9][scale(m[d.properties.ZCTA5CE10])])
 
   d3.rebind map, dispatch, 'on'
   map
