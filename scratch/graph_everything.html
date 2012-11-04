@@ -1,3 +1,4 @@
+<script src="jquery/dist/jquery.js"></script>
 <script src="crossfilter/crossfilter.js"></script>
 <script src="d3/d3.v2.js"></script>
 <script src="/scratch/data.js"></script>
@@ -8,6 +9,8 @@
 
 <body>
   <h1>Hubway Trips</h1>
+  <div id="loading"><img src="../images/gear.svg" width="300" height="300"/></div>
+  <div id="charts" style="display: none">
   <div id="hour-chart" class="chart">
     <div class="title">Time of Day</div>
   </div>
@@ -40,4 +43,5 @@
   <div id="active"></div>
 
   <div id="map"></div>
+</div>
 </body>

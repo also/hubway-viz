@@ -1,3 +1,20 @@
+worker = new Worker 'crossfilter_webworker.js'
+data = null
+
+handleCrossfilterWorkerMessage = (e) ->
+  [type, payload] = e.data
+  if type == 'indexes'
+    filter = hwdv.create_filters data, payload
+    creat_charts data, filter
+    $('#loading').hide()
+    $('#charts').show()
+
+worker.addEventListener 'message', handleCrossfilterWorkerMessage, false
+
+hwdv.load_data '/output', (d) ->
+  data = d
+  worker.postMessage ['init', d]
+
 makeMap = (zips) ->
   # center on some random point near boston
   dimension = null
@@ -70,18 +87,6 @@ makeMap = (zips) ->
   d3.rebind map, dispatch, 'on'
   map
 
-hwdv.load_data '/output', (data) ->
-  #user_indexes = {}
-  #  user_indexes[''+ r.user_index] = true
-  #  r
-
-  #for i in [0...data.users.length]
-  #  if !user_indexes[''+i]
-  #    console.log i
-
-  hwdv.load_crossfilter_indexes '/output', (index) ->
-    filter = hwdv.create_filters data, index
-    creat_charts data, filter
 
 creat_charts = (data, filter) ->
   charts = [
@@ -161,7 +166,7 @@ creat_charts = (data, filter) ->
     d3.select(this).call(method)
 
   # Whenever the brush moves, re-rendering everything.
-  renderAll = ->
+  window.renderAll = ->
     chart.each(render)
     map.update()
     d3.select("#active").text(formatNumber(filter.all.value()))
