@@ -1,6 +1,10 @@
 worker = new Worker 'crossfilter_webworker.js'
 data = null
 
+hwdv.load_data '/output', (d) ->
+  data = d
+  worker.postMessage ['init', d]
+
 handleCrossfilterWorkerMessage = (e) ->
   [type, payload] = e.data
   if type == 'indexes'
@@ -10,10 +14,6 @@ handleCrossfilterWorkerMessage = (e) ->
     $('#charts').show()
 
 worker.addEventListener 'message', handleCrossfilterWorkerMessage, false
-
-hwdv.load_data '/output', (d) ->
-  data = d
-  worker.postMessage ['init', d]
 
 creat_charts = (data, filter) ->
   charts = [
@@ -69,7 +69,7 @@ creat_charts = (data, filter) ->
         .round(Math.floor)
       .x(d3.scale.ordinal()
         .domain(['F', 'M'])
-        .range([0, 20]))
+        .rangeRoundBands([0, 40]))
       .barWidth(19)
       .width(40)
 
@@ -78,8 +78,8 @@ creat_charts = (data, filter) ->
         .group(filter.group.registrations)
         .round(Math.floor)
       .x(d3.scale.ordinal()
-        .domain([false, true])
-        .range([0, 20]))
+        .domain(['N', 'Y'])
+        .rangeRoundBands([0, 40]))
       .barWidth(19)
       .width(40)
   ]
