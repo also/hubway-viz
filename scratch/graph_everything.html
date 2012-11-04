@@ -1,3 +1,6 @@
+<script src="//use.typekit.net/ppw7dts.js"></script>
+<script>try{Typekit.load();}catch(e){}</script>
+
 <script src="jquery/dist/jquery.js"></script>
 <script src="crossfilter/crossfilter.js"></script>
 <script src="d3/d3.v2.js"></script>
@@ -9,9 +12,10 @@
 <link rel="stylesheet" href="/scratch/graph_everything.css"/>
 
 <body>
-  <h1>Hubway Trips</h1>
-  <div id="loading"><img src="../images/gear.svg" width="300" height="300"/></div>
-  <div id="charts" style="display: none">
+<h1>Hubway Trips</h1>
+<div id="loading"><img src="../images/gear.svg" width="300" height="300"/></div>
+<div id="charts" style="display: none">
+  <div><span id="active">0</span> trips selected.</div>
   <div id="hour-chart" class="chart">
     <div class="title">Time of Day</div>
   </div>
@@ -41,8 +45,9 @@
   <div id="registered-chart" class="chart">
     <div class="title">Registered</div>
   </div>
-  <div id="active"></div>
 
-  <div id="map"></div>
+  <div id="map" class="chart">
+    <div class="title">Registration Zip Code</div>
+  </div>
 </div>
 </body>

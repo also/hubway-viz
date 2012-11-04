@@ -1,5 +1,5 @@
 body {
-  font-family: "Helvetica Neue";
+  font-family: "ff-dagny-web-pro";
   margin: 30px 50px;
   color: #333;
 }
@@ -17,7 +17,7 @@ h1 {
   font-size: 40px;
   margin-top: .3em;
   margin-bottom: 0;
-  color: #888;
+  color: #333;
 }
 
 h1 + h2 {
@@ -30,7 +30,6 @@ h2 {
 }
 
 h1, h2 {
-  font-weight: 200;
   text-rendering: optimizeLegibility;
 }
 
@@ -46,8 +45,9 @@ h1, h2 {
 
 .chart {
   display: inline-block;
-  height: 151px;
-  margin-bottom: 20px;
+  margin: 20px;
+  border: 1px solid #eee;
+  padding: 8px;
 }
 
 .reset {
