@@ -105,6 +105,7 @@ creat_charts = (data, filter) ->
   window.reset = (i) ->
     charts[i].filter(null);
     renderAll();
+    undefined
 
   chart = d3.selectAll(".chart")
       .data(charts)
