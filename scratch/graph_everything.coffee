@@ -1,7 +1,7 @@
 worker = new Worker 'crossfilter_webworker.js'
 data = null
 
-hwdv.load_data '/output', (d) ->
+hwdv.load_data '../output', (d) ->
   data = d
   worker.postMessage ['init', d]
 
