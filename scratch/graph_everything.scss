@@ -8,29 +8,11 @@ body {
   position: relative;
 }
 
-footer {
-  padding: 2em 0 1em 0;
-  font-size: 12px;
-}
-
 h1 {
   font-size: 40px;
   margin-top: .3em;
   margin-bottom: 0;
   color: #333;
-}
-
-h1 + h2 {
-  margin-top: 0;
-}
-
-h2 {
-  font-weight: 400;
-  font-size: 28px;
-}
-
-h1, h2 {
-  text-rendering: optimizeLegibility;
 }
 
 #body > p {
@@ -45,7 +27,7 @@ h1, h2 {
 
 .chart {
   display: inline-block;
-  margin: 20px;
+  margin: 10px;
   border: 1px solid #eee;
   padding: 8px;
 }
@@ -84,13 +66,6 @@ h1, h2 {
   stroke: #666;
 }
 
-aside {
-  position: absolute;
-  left: 740px;
-  font-size: smaller;
-  width: 220px;
-}
-
 #map path {
   stroke: #fff;
   &.selected {
@@ -101,7 +76,11 @@ aside {
 
 #loading {
   padding: 20px;
-  background-color: #666;
+  background-color: #eee;
+  font-size: 40px;
+  text-align: center;
+  margin-top: 30px;
+  font-weight: 800;
 }
 
 @-webkit-keyframes spin {

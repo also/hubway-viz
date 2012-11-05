@@ -1,19 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hubway Trips</title>
 <script src="//use.typekit.net/ppw7dts.js"></script>
 <script>try{Typekit.load();}catch(e){}</script>
 
 <script src="jquery/dist/jquery.js"></script>
 <script src="crossfilter/crossfilter.js"></script>
 <script src="d3/d3.v2.js"></script>
-<script src="/scratch/data.js"></script>
+<script src="data.js"></script>
 <script src="choropleth.js"></script>
-<script src="/scratch/crossfilter_helper.js"></script>
-<script src="/scratch/graph_everything.js"></script>
-<script src="/scratch/d3/lib/colorbrewer/colorbrewer.js"></script>
-<link rel="stylesheet" href="/scratch/graph_everything.css"/>
-
+<script src="crossfilter_helper.js"></script>
+<script src="graph_everything.js"></script>
+<script src="d3/lib/colorbrewer/colorbrewer.js"></script>
+<link rel="stylesheet" href="graph_everything.css"/>
+</head>
 <body>
-<h1>Hubway Trips</h1>
-<div id="loading"><img src="../images/gear.svg" width="300" height="300"/></div>
+  <h1>Hubway Trips</h1>
+  <p>Explore the dimensions of 552,066 Hubway trips over the past year. Click and drag the graphs or click the map to filter the data. Watch <a href="http://vimeo.com/52808332">this video</a> if that doesn't make sense, or if it doesn't work for you. <strong><a href="https://github.com/square/crossfilter/issues/40">Don't use Chrome<a></strong>.</p>
+<div id="loading"><img src="../images/gear.svg" width="150" height="150"/>
+  <p>Loading...</p>
+</div>
 <div id="charts" style="display: none">
   <div><span id="active">0</span> trips selected.</div>
   <div id="hour-chart" class="chart">
@@ -24,26 +31,24 @@
     <div class="title">Day of Week</div>
   </div>
 
-
   <div id="duration-chart" class="chart">
     <div class="title">Duration</div>
+  </div>
+
+  <div id="registered-chart" class="chart">
+    <div class="title">Registered</div>
+  </div>
+  
+  <div id="gender-chart" class="chart">
+    <div class="title">Gender</div>
   </div>
 
   <div id="age-chart" class="chart">
     <div class="title">Age</div>
   </div>
 
-
   <div id="date-chart" class="chart">
     <div class="title">Date</div>
-  </div>
-
-  <div id="gender-chart" class="chart">
-    <div class="title">Gender</div>
-  </div>
-
-  <div id="registered-chart" class="chart">
-    <div class="title">Registered</div>
   </div>
 
   <div id="map" class="chart">
@@ -51,3 +56,4 @@
   </div>
 </div>
 </body>
+</html>

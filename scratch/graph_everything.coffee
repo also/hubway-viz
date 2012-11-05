@@ -44,23 +44,14 @@ creat_charts = (data, filter) ->
       .barWidth(6),
 
     barChart()
-        .dimension(filter.dimension.age)
-        .group(filter.group.ages)
-        .groupFilter((d) -> d.key != 0)
+        .dimension(filter.dimension.registration)
+        .group(filter.group.registrations)
         .round(Math.floor)
-      .x(d3.scale.linear()
-        .domain([10, 80])
-        .rangeRound([0, 210]))
-      .barWidth(2),
-
-    barChart()
-        .dimension(filter.dimension.date)
-        .group(filter.group.dates)
-        .round(d3.time.day.round)
-      .x(d3.time.scale()
-        .domain([new Date(2011, 6, 25), new Date(2012, 9, 5)])
-        .rangeRound([0, 438*2]))
-       .barWidth(1),
+      .x(d3.scale.ordinal()
+        .domain(['N', 'Y'])
+        .rangeRoundBands([0, 40]))
+      .barWidth(19)
+      .width(40)
 
     barChart()
         .dimension(filter.dimension.gender)
@@ -74,14 +65,25 @@ creat_charts = (data, filter) ->
       .width(40)
 
     barChart()
-        .dimension(filter.dimension.registration)
-        .group(filter.group.registrations)
+        .dimension(filter.dimension.age)
+        .group(filter.group.ages)
+        .groupFilter((d) -> d.key != 0)
         .round(Math.floor)
-      .x(d3.scale.ordinal()
-        .domain(['N', 'Y'])
-        .rangeRoundBands([0, 40]))
-      .barWidth(19)
-      .width(40)
+      .x(d3.scale.linear()
+        .domain([10, 80])
+        .rangeRound([0, 210]))
+      .barWidth(2),
+
+
+    barChart()
+        .dimension(filter.dimension.date)
+        .group(filter.group.dates)
+        .round(d3.time.day.round)
+      .x(d3.time.scale()
+        .domain([new Date(2011, 6, 25), new Date(2012, 9, 5)])
+        .rangeRound([0, 438*2]))
+       .barWidth(1),
+
   ]
   
   # Given our array of charts, which we assume are in the same order as the
