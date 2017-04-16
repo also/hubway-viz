@@ -90,13 +90,13 @@
         var uniformsTerrain = THREE.UniformsUtils.clone(terrainShader.uniforms);
 
         // how to treat abd scale the normal texture
-        uniformsTerrain[ "tNormal" ].value = detailTexture;
-        uniformsTerrain[ "uNormalScale" ].value = 1;
+        //uniformsTerrain[ "tNormal" ].value = detailTexture;
+        //uniformsTerrain[ "uNormalScale" ].value = 1;
 
         // the displacement determines the height of a vector, mapped to
         // the heightmap
         uniformsTerrain[ "tDisplacement" ].value = texture;
-        uniformsTerrain[ "uDisplacementScale" ].value = 100;
+        uniformsTerrain[ "uDisplacementScale" ].value = 200;
 
         // the following textures can be use to finetune how
         // the map is shown. These are good defaults for simple
@@ -108,13 +108,13 @@
         uniformsTerrain[ "enableSpecular" ].value = true;
 
         // diffuse is based on the light reflection
-        uniformsTerrain[ "uDiffuseColor" ].value.setHex(0xcccccc);
-        uniformsTerrain[ "uSpecularColor" ].value.setHex(0xff0000);
+        //uniformsTerrain[ "uDiffuseColor" ].value.setHex(0xcccccc);
+        //uniformsTerrain[ "uSpecularColor" ].value.setHex(0xff0000);
         // is the base color of the terrain
-        uniformsTerrain[ "uAmbientColor" ].value.setHex(0x0000cc);
+        //uniformsTerrain[ "uAmbientColor" ].value.setHex(0x0000cc);
 
         // how shiny is the terrain
-        uniformsTerrain[ "uShininess" ].value = 3;
+        //uniformsTerrain[ "uShininess" ].value = 3;
 
         // handles light reflection
         uniformsTerrain[ "uRepeatOverlay" ].value.set(6, 6);

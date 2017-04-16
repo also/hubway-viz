@@ -1,30 +1,36 @@
-worker = new Worker 'crossfilter_webworker.js'
+if Worker?
+  worker = new Worker 'crossfilter_webworker.js'
+  handleCrossfilterWorkerMessage = (e) ->
+    [type, payload] = e.data
+    if type == 'indexes'
+      create_charts_and_filters payload
+  worker.addEventListener 'message', handleCrossfilterWorkerMessage, false
+
 data = null
 
 hwdv.load_data '../output', (d) ->
   data = d
-  worker.postMessage ['init', d]
+  if worker?
+    worker.postMessage ['init', d]
+  else
+    create_charts_and_filters()
 
-handleCrossfilterWorkerMessage = (e) ->
-  [type, payload] = e.data
-  if type == 'indexes'
-    filter = hwdv.create_filters data, payload
-    creat_charts data, filter
-    $('#loading').hide()
-    $('#charts').show()
-
-worker.addEventListener 'message', handleCrossfilterWorkerMessage, false
+create_charts_and_filters = (indexes) ->
+  filter = hwdv.create_filters data, indexes
+  creat_charts data, filter
+  $('#loading').hide()
+  $('#charts').show()
 
 creat_charts = (data, filter) ->
   charts = [
-    barChart()
+    start_hour = barChart()
         .dimension(filter.dimension.start_hour)
         .group(filter.group.start_hours)
       .x(d3.scale.linear()
         .domain([0, 24])
         .rangeRound([0, 10 * 24])),
 
-    barChart()
+    start_day_of_week = barChart()
         .dimension(filter.dimension.start_day_of_week)
         .group(filter.group.start_day_of_weeks)
         .round(Math.floor)
@@ -34,7 +40,7 @@ creat_charts = (data, filter) ->
         .labels((d, i) -> 'SSMTWTF'[i])
         .barWidth(16),
 
-    barChart()
+    duration = barChart()
         .dimension(filter.dimension.duration)
         .group(filter.group.durations)
         .round(Math.floor)
@@ -43,7 +49,7 @@ creat_charts = (data, filter) ->
         .rangeRound([0, 7 * 60]))
       .barWidth(6),
 
-    barChart()
+    registration = barChart()
         .dimension(filter.dimension.registration)
         .group(filter.group.registrations)
         .round(Math.floor)
@@ -53,7 +59,7 @@ creat_charts = (data, filter) ->
       .barWidth(19)
       .width(40)
 
-    barChart()
+    gender = barChart()
         .dimension(filter.dimension.gender)
         .group(filter.group.genders)
         .groupFilter((d) -> d.key != 'U')
@@ -64,7 +70,7 @@ creat_charts = (data, filter) ->
       .barWidth(19)
       .width(40)
 
-    barChart()
+    age = barChart()
         .dimension(filter.dimension.age)
         .group(filter.group.ages)
         .groupFilter((d) -> d.key != 0)
@@ -75,7 +81,7 @@ creat_charts = (data, filter) ->
       .barWidth(2),
 
 
-    barChart()
+    date = barChart()
         .dimension(filter.dimension.date)
         .group(filter.group.dates)
         .round(d3.time.day.round)
@@ -85,6 +91,8 @@ creat_charts = (data, filter) ->
        .barWidth(1),
 
   ]
+
+  c = {date, start_hour, start_day_of_week, duration, gender, age, registration}
   
   # Given our array of charts, which we assume are in the same order as the
   # .chart elements in the DOM, bind the charts to the DOM and render them.
@@ -100,9 +108,11 @@ creat_charts = (data, filter) ->
     map.update()
     d3.select("#active").text(formatNumber(filter.all.value()))
 
-  window.filter = (filters) ->
-    filters.forEach((d, i) -> charts[i].filter(d) )
+  window.filter = (name, v) ->
+    chart.filter(null) for chart in charts
+    c[name].filter(v)
     renderAll()
+    undefined
 
   window.reset = (i) ->
     charts[i].filter(null);
@@ -121,3 +131,5 @@ creat_charts = (data, filter) ->
   map d3.select("#map")
 
   renderAll()
+
+window.d = (y,m,d=1) -> new Date y,m-1,d

@@ -21,6 +21,25 @@ end 7
 bike 10
 user 11
 
+until they changed the data again....
+
+now there are 3333 user combinations
+
+     381 zips
+
+    119 age_gender
+
+date 15
+duration 13
+start 7
+end 7
+bike 10
+user 12
+
+ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31
+
+32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63
+
 found coastline: http://support.mapbox.com/discussions/tilemill/293-rendering-osm-processed-coastlines
 unfortunately, not enough detail. close...
 OSM data: http://download.bbbike.org/osm/bbbike/CambridgeMa/
@@ -109,3 +128,5 @@ There are some overlapping trips:
 
 download the zip code shapefile from here: http://www.census.gov/geo/www/tiger/tgrshp2010/usernotes.html
 http://vallandingham.me/shapefile_to_geojson.html
+
+using lidar (elevation data) from http://www.mass.gov/anf/research-and-tech/it-serv-and-support/application-serv/office-of-geographic-information-massgis/datalayers/ftplidar-2002boston.html

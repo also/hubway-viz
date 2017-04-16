@@ -89,7 +89,7 @@ load_data = (path, callback) ->
   zips_geo = JSON.parse read_text_sync 'zips_filtered.json'
   stations_geo = JSON.parse read_text_sync 'stations_geo.json'
 
-  read_bin_async '/output/trips_packed', (d) ->
+  read_bin_async 'trips_packed', (d) ->
     trips = new hwdv.PackedTripRecords(d, date_ranges)
     callback {trips, users, zips_geo, stations_geo}
 

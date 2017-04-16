@@ -18,10 +18,16 @@
 <body>
   <h1>Hubway Trips</h1>
   <p>Explore the dimensions of 552,066 Hubway trips over the past year. Click and drag the graphs or click the map to filter the data. Watch <a href="http://vimeo.com/52808332">this video</a> if that doesn't make sense, or if it doesn't work for you. <strong><a href="https://github.com/square/crossfilter/issues/40">Don't use Chrome<a></strong>.</p>
+
 <div id="loading"><img src="../images/gear.svg" width="150" height="150"/>
   <p>Loading...</p>
 </div>
 <div id="charts" style="display: none">
+      <ul>
+        <li>How are <a href="javascript:filter('start_day_of_week',[0,2])">weekends</a> different from <a href="javascript:filter('start_day_of_week',[2,7])">weekdays</a>?</li>
+        <li>Are all these casual users <a href="javascript:filter('start_hour',[1,4])">biking drunk</a>?</li>
+        <li>Have usage patterns changed much between <a href="javascript:filter('date',[d(2011,8),d(2011,10)])">last year</a> and <a href="javascript:filter('date',[d(2012,8),d(2012,10)])">this year</a>?</li>
+      </ul>
   <div><span id="active">0</span> trips selected.</div>
   <div id="hour-chart" class="chart">
     <div class="title">Time of Day</div>
@@ -55,5 +61,18 @@
     <div class="title">Registration Zip Code</div>
   </div>
 </div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-3527365-12']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
 </body>
 </html>
